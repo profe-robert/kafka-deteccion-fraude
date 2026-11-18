@@ -104,22 +104,22 @@ Guarda el siguiente script como `test_fraude.sh`, dale permisos de ejecución (`
 URL="http://localhost:8081/api/transacciones"
 
 echo "=========================================================="
-echo "1. ESCENARIO NORMAL: Transacción legítima (< $1,000)"
+echo "1. ESCENARIO NORMAL: Transacción legítima (< \$1,000)"
 echo "   Resultado esperado: Sin alertas."
 echo "=========================================================="
 curl -s -X POST "$URL" \
-  -H "Content-Type: application/json" \
-  -d '{"usuarioId": "usuario-normal-01", "monto": 45.50, "comercio": "Cafetería Central"}'
+  -H "Content-Type: application/json; charset=utf-8" \
+  -d '{"usuarioId": "usuario-normal-01", "monto": 45.50, "comercio": "Cafeteria Central"}'
 echo -e "\n"
 sleep 2
 
 echo "=========================================================="
-echo "2. ESCENARIO FRAUDE STATELESS: Monto elevado (> $1,000)"
+echo "2. ESCENARIO FRAUDE STATELESS: Monto elevado (> \$1,000)"
 echo "   Resultado esperado: 1 alerta inmediata por monto alto."
 echo "=========================================================="
 curl -s -X POST "$URL" \
-  -H "Content-Type: application/json" \
-  -d '{"usuarioId": "usuario-vip-02", "monto": 2500.00, "comercio": "Joyería Internacional"}'
+  -H "Content-Type: application/json; charset=utf-8" \
+  -d '{"usuarioId": "usuario-vip-02", "monto": 2500.00, "comercio": "Joyeria Internacional"}'
 echo -e "\n"
 sleep 2
 
@@ -132,7 +132,7 @@ for i in {1..4}
 do
   echo "-> Enviando transacción #$i..."
   curl -s -X POST "$URL" \
-    -H "Content-Type: application/json" \
+    -H "Content-Type: application/json; charset=utf-8" \
     -d "{\"usuarioId\": \"usuario-rafaga-03\", \"monto\": 25.00, \"comercio\": \"Tienda Digital #$i\"}"
   echo ""
   sleep 1
